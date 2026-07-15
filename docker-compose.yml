@@ -1,0 +1,23 @@
+# Deployable directly as a Portainer Stack (point it at this repo) or with `docker compose up -d`.
+# Set DISCORD_BOT_TOKEN and ANTHROPIC_API_KEY as environment variables in the Portainer stack UI
+# (or in a local .env file next to this compose file).
+services:
+  vlabeler-bot:
+    build: .
+    image: vlabeler-discord-bot
+    restart: unless-stopped
+    environment:
+      DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN:?required}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:?required}
+      CLAUDE_MODEL: ${CLAUDE_MODEL:-claude-sonnet-5}
+      MAX_TURNS: ${MAX_TURNS:-25}
+      MAX_BUDGET_USD_PER_QUERY: ${MAX_BUDGET_USD_PER_QUERY:-0.50}
+      ALLOWED_CHANNEL_IDS: ${ALLOWED_CHANNEL_IDS:-}
+      USER_COOLDOWN_SECONDS: ${USER_COOLDOWN_SECONDS:-30}
+      MAX_CONCURRENT_QUERIES: ${MAX_CONCURRENT_QUERIES:-2}
+      REPO_SYNC_MINUTES: ${REPO_SYNC_MINUTES:-30}
+    volumes:
+      - vlabeler-repo:/data
+
+volumes:
+  vlabeler-repo:

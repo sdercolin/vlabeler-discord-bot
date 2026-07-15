@@ -65,6 +65,28 @@ Each answered question logs its actual cost to the console.
   a weird answer.
 - Keep `.env` out of git (already in `.gitignore`).
 
+## Hosting with Docker / Portainer (recommended)
+
+The container clones the vLabeler repo by itself on first start (into a named volume) and keeps it
+synced, so the only inputs are your two tokens.
+
+**Portainer**: *Stacks → Add stack → Repository*, set the repository URL to
+`https://github.com/sdercolin/vlabeler-discord-bot` and compose path `docker-compose.yml`. Add
+`DISCORD_BOT_TOKEN` and `ANTHROPIC_API_KEY` (plus any optional overrides from `.env.example`) as
+environment variables in the stack editor, then deploy. Restarts, logs, and env changes are all in
+the Portainer UI; `restart: unless-stopped` also brings the bot back automatically after crashes
+and VPS reboots.
+
+**Plain docker compose**:
+
+```bash
+git clone https://github.com/sdercolin/vlabeler-discord-bot
+cd vlabeler-discord-bot
+cp .env.example .env && nano .env   # tokens only; the repo path is handled inside the container
+docker compose up -d --build
+docker compose logs -f
+```
+
 ## Hosting on a VPS (systemd)
 
 Any always-on Linux box works. Example setup on a VPS:
