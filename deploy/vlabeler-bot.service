@@ -1,0 +1,22 @@
+# systemd unit for the vLabeler Discord support bot.
+# Adjust User and the two paths below, then:
+#   sudo cp deploy/vlabeler-bot.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now vlabeler-bot
+
+[Unit]
+Description=vLabeler Discord support bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=YOUR_USER
+WorkingDirectory=/opt/vlabeler-discord-bot
+ExecStart=/usr/bin/env node dist/index.js
+Restart=always
+RestartSec=10
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target

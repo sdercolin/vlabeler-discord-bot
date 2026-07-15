@@ -1,0 +1,26 @@
+{
+  "name": "vlabeler-discord-bot",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Discord support bot for vLabeler, powered by the Claude Agent SDK",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts",
+    "ask": "tsx src/ask.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.3.210",
+    "discord.js": "^14.26.5",
+    "dotenv": "^17.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "tsx": "^4.23.1",
+    "typescript": "^7.0.2"
+  }
+}
