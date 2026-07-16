@@ -7,8 +7,9 @@ version: "2"
 
 services:
   vlabeler-bot:
-    build: .
-    image: vlabeler-discord-bot
+    # Prebuilt by .github/workflows/docker.yml; old Portainer stacks can't build from a Dockerfile.
+    # To build locally instead: docker build -t ghcr.io/sdercolin/vlabeler-discord-bot .
+    image: ghcr.io/sdercolin/vlabeler-discord-bot:latest
     restart: unless-stopped
     environment:
       # Both required — the bot exits with a clear error at startup if missing

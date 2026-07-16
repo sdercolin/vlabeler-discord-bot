@@ -7,6 +7,7 @@ COPY src ./src
 RUN npm run build
 
 FROM node:22-slim
+LABEL org.opencontainers.image.source=https://github.com/sdercolin/vlabeler-discord-bot
 # git is needed at runtime to clone/sync the vLabeler repo the bot reads
 RUN apt-get update \
     && apt-get install -y --no-install-recommends git ca-certificates \
