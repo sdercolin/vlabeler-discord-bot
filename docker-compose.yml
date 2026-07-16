@@ -2,7 +2,8 @@
 # Set DISCORD_BOT_TOKEN and ANTHROPIC_API_KEY as environment variables in the Portainer stack UI
 # (or in a local .env file next to this compose file).
 # The version key is required by older compose parsers (e.g. in Portainer); newer ones ignore it.
-version: "3.8"
+# "2" is the newest format the libcompose parser in old Portainer versions understands.
+version: "2"
 
 services:
   vlabeler-bot:
