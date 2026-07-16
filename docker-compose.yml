@@ -7,8 +7,9 @@ services:
     image: vlabeler-discord-bot
     restart: unless-stopped
     environment:
-      DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN:?required}
-      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:?required}
+      # Both required — the bot exits with a clear error at startup if missing
+      DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
       CLAUDE_MODEL: ${CLAUDE_MODEL:-claude-sonnet-5}
       MAX_TURNS: ${MAX_TURNS:-25}
       MAX_BUDGET_USD_PER_QUERY: ${MAX_BUDGET_USD_PER_QUERY:-0.50}
