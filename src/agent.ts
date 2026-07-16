@@ -28,6 +28,7 @@ export async function askAgent(prompt: string, resumeSessionId?: string): Promis
       maxTurns: config.maxTurns,
       maxBudgetUsd: config.maxBudgetUsdPerQuery,
       permissionMode: "bypassPermissions",
+      stderr: (data: string) => console.error(`[claude stderr] ${data.trimEnd()}`),
       ...(resumeSessionId ? { resume: resumeSessionId } : {}),
     },
   })) {
