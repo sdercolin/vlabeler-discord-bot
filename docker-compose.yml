@@ -10,13 +10,14 @@ services:
       # Both required — the bot exits with a clear error at startup if missing
       DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
-      CLAUDE_MODEL: ${CLAUDE_MODEL:-claude-sonnet-5}
-      MAX_TURNS: ${MAX_TURNS:-25}
-      MAX_BUDGET_USD_PER_QUERY: ${MAX_BUDGET_USD_PER_QUERY:-0.50}
-      ALLOWED_CHANNEL_IDS: ${ALLOWED_CHANNEL_IDS:-}
-      USER_COOLDOWN_SECONDS: ${USER_COOLDOWN_SECONDS:-30}
-      MAX_CONCURRENT_QUERIES: ${MAX_CONCURRENT_QUERIES:-2}
-      REPO_SYNC_MINUTES: ${REPO_SYNC_MINUTES:-30}
+      # Optional — leave undefined to use the app's built-in defaults (see .env.example)
+      CLAUDE_MODEL: ${CLAUDE_MODEL}
+      MAX_TURNS: ${MAX_TURNS}
+      MAX_BUDGET_USD_PER_QUERY: ${MAX_BUDGET_USD_PER_QUERY}
+      ALLOWED_CHANNEL_IDS: ${ALLOWED_CHANNEL_IDS}
+      USER_COOLDOWN_SECONDS: ${USER_COOLDOWN_SECONDS}
+      MAX_CONCURRENT_QUERIES: ${MAX_CONCURRENT_QUERIES}
+      REPO_SYNC_MINUTES: ${REPO_SYNC_MINUTES}
     volumes:
       - vlabeler-repo:/data
 

@@ -20,7 +20,7 @@ function num(name: string, fallback: number): number {
   return value;
 }
 
-const repoPath = path.resolve(process.env.VLABELER_REPO_PATH ?? "../vlabeler");
+const repoPath = path.resolve(process.env.VLABELER_REPO_PATH || "../vlabeler");
 if (!fs.existsSync(path.join(repoPath, "build.gradle.kts"))) {
   throw new Error(
     `VLABELER_REPO_PATH (${repoPath}) does not look like a vlabeler checkout. ` +
@@ -33,7 +33,8 @@ export const config = {
   anthropicApiKey: required("ANTHROPIC_API_KEY"),
   repoPath,
   repoSyncMinutes: num("REPO_SYNC_MINUTES", 30),
-  model: process.env.CLAUDE_MODEL ?? "claude-sonnet-5",
+  // `||` (not `??`): compose interpolation passes empty strings for undefined vars
+  model: process.env.CLAUDE_MODEL || "claude-sonnet-5",
   maxTurns: num("MAX_TURNS", 25),
   maxBudgetUsdPerQuery: num("MAX_BUDGET_USD_PER_QUERY", 0.5),
   allowedChannelIds: (process.env.ALLOWED_CHANNEL_IDS ?? "")
