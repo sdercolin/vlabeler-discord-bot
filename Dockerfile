@@ -21,7 +21,9 @@ COPY docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 # Mount a volume at /data (compose does; on Railway attach one) to persist the
-# vLabeler checkout across restarts; without one it just re-clones on start.
-ENV VLABELER_REPO_PATH=/data/vlabeler
+# vLabeler checkouts across restarts; without one they just re-clone on start.
+ENV VLABELER_REPO_PATH=/data/vlabeler \
+    VLABELER_DEV_REPO_PATH=/data/vlabeler-dev \
+    RELEASES_DIR=/data/releases
 
 ENTRYPOINT ["/entrypoint.sh"]

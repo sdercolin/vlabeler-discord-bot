@@ -1,11 +1,21 @@
+import fs from "node:fs";
 import { query } from "@anthropic-ai/claude-agent-sdk";
 import { config } from "./config.js";
-import { SYSTEM_PROMPT } from "./system-prompt.js";
+import { buildSystemPrompt } from "./system-prompt.js";
 
 export interface AgentAnswer {
   text: string;
   sessionId?: string;
   costUsd?: number;
+}
+
+/** Extra read-only sources beyond the main checkout, if they exist. */
+function availableSources() {
+  const devRepoPath =
+    config.devRepoPath && fs.existsSync(config.devRepoPath) ? config.devRepoPath : undefined;
+  const releasesDir =
+    config.releasesDir && fs.existsSync(config.releasesDir) ? config.releasesDir : undefined;
+  return { devRepoPath, releasesDir };
 }
 
 /**
@@ -18,12 +28,18 @@ export async function askAgent(prompt: string, resumeSessionId?: string): Promis
   let costUsd: number | undefined;
   let errorSubtype: string | undefined;
 
+  const sources = availableSources();
+  const additionalDirectories = [sources.devRepoPath, sources.releasesDir].filter(
+    (p): p is string => p !== undefined,
+  );
+
   for await (const message of query({
     prompt,
     options: {
       cwd: config.repoPath,
+      additionalDirectories,
       allowedTools: ["Read", "Glob", "Grep"],
-      systemPrompt: SYSTEM_PROMPT,
+      systemPrompt: buildSystemPrompt(sources),
       model: config.model,
       maxTurns: config.maxTurns,
       maxBudgetUsd: config.maxBudgetUsdPerQuery,

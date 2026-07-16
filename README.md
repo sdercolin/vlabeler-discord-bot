@@ -70,7 +70,9 @@ Each answered question logs its actual cost to the console.
 A prebuilt image is published to `ghcr.io/sdercolin/vlabeler-discord-bot:latest` on every push to
 `main` (see `.github/workflows/docker.yml`), so the stack only pulls — no building on the server.
 The container clones the vLabeler repo by itself on first start (into a named volume) and keeps it
-synced, so the only inputs are your two tokens. To update the bot: re-pull the image and recreate
+synced, so the only inputs are your two tokens. It reads three sources: the `main` branch checkout
+(matches the latest release), a `dev` branch checkout (unreleased changes), and GitHub release
+notes synced to a local file every `REPO_SYNC_MINUTES`. To update the bot: re-pull the image and recreate
 the container in Portainer.
 
 **Portainer**: *Stacks → Add stack → Repository*, set the repository URL to

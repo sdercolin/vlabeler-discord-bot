@@ -28,10 +28,19 @@ if (!fs.existsSync(path.join(repoPath, "build.gradle.kts"))) {
   );
 }
 
+function optionalPath(name: string): string | undefined {
+  const raw = process.env[name];
+  return raw ? path.resolve(raw) : undefined;
+}
+
 export const config = {
   discordBotToken: required("DISCORD_BOT_TOKEN"),
   anthropicApiKey: required("ANTHROPIC_API_KEY"),
   repoPath,
+  // Optional second checkout of the dev branch and a directory for synced release notes;
+  // when unset, the bot only knows the main checkout.
+  devRepoPath: optionalPath("VLABELER_DEV_REPO_PATH"),
+  releasesDir: optionalPath("RELEASES_DIR"),
   repoSyncMinutes: num("REPO_SYNC_MINUTES", 30),
   // `||` (not `??`): compose interpolation passes empty strings for undefined vars
   model: process.env.CLAUDE_MODEL || "claude-sonnet-5",
