@@ -27,7 +27,9 @@ export async function askAgent(prompt: string, resumeSessionId?: string): Promis
       model: config.model,
       maxTurns: config.maxTurns,
       maxBudgetUsd: config.maxBudgetUsdPerQuery,
-      permissionMode: "bypassPermissions",
+      // Not "bypassPermissions": its --dangerously-skip-permissions flag is refused under
+      // root (containers). allowedTools already pre-approves everything the agent may use.
+      permissionMode: "default",
       stderr: (data: string) => console.error(`[claude stderr] ${data.trimEnd()}`),
       ...(resumeSessionId ? { resume: resumeSessionId } : {}),
     },
