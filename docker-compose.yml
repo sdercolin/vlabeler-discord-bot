@@ -1,6 +1,9 @@
 # Deployable directly as a Portainer Stack (point it at this repo) or with `docker compose up -d`.
 # Set DISCORD_BOT_TOKEN and ANTHROPIC_API_KEY as environment variables in the Portainer stack UI
 # (or in a local .env file next to this compose file).
+# The version key is required by older compose parsers (e.g. in Portainer); newer ones ignore it.
+version: "3.8"
+
 services:
   vlabeler-bot:
     build: .
